@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}My Dashboard{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header"><h3>My Attendance Summary</h3></div>
+            <div class="card-body">
+                <p class="lead">Welcome, {{ session.username }}!</p>
+                {% if summary %}
+                <table class="table">
+                    <thead><tr><th>Course Name</th><th>Attendance Percentage</th><th>Status</th></tr></thead>
+                    <tbody>
+                        {% for item in summary %}
+                        <tr>
+                            <td>{{ item.course_name }}</td>
+                            <td>
+                                <div class="progress" style="height: 25px;">
+                                    <div class="progress-bar {% if item.is_low %}bg-danger{% else %}bg-success{% endif %}" role="progressbar" style="width: {{ item.percentage }}%;" aria-valuenow="{{ item.percentage }}" aria-valuemin="0" aria-valuemax="100">
+                                        {{ "%.2f"|format(item.percentage) }}%
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {% if item.is_low %}<span class="badge bg-danger">Low Attendance</span>{% else %}<span class="badge bg-success">Good Standing</span>{% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="alert alert-info text-center">No attendance data is available for you yet.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

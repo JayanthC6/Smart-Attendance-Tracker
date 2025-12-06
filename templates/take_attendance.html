@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block title %}Take Attendance{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card mb-4">
+            <div class="card-header"><h3>Take Attendance</h3></div>
+            <div class="card-body">
+                <form method="get">
+                    <label for="view_course_id" class="form-label"><strong>1. Select Course to View Students</strong></label>
+                    <div class="input-group">
+                        <select name="view_course_id" class="form-select" required>
+                            <option value="">-- Please select a course --</option>
+                            {% for course in courses %}<option value="{{ course.id }}" {% if course.id == selected_course_id %}selected{% endif %}>{{ course.name }}</option>{% endfor %}
+                        </select>
+                        <button class="btn btn-info" type="submit">View Students</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if selected_course_id %}
+        <div class="card">
+            <div class="card-header">
+                Students for 
+                {% for course in courses %}
+                    {% if course.id == selected_course_id %}<strong>{{ course.name }}</strong>{% endif %}
+                {% endfor %}
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" name="course_id" value="{{ selected_course_id }}">
+                    <div class="mb-4">
+                        <label for="date" class="form-label"><strong>2. Select Date and Mark Attendance</strong></label>
+                        <input type="date" name="date" class="form-control" required value="{{ start_date }}" min="{{ start_date }}" max="{{ end_date }}">
+                    </div>
+                    {% if students %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th class="text-center">Mark as Present</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr>
+                                <td>{{ student.full_name }}</td>
+                                <td class="text-center">
+                                    <!-- This hidden input sends ALL student IDs to the server -->
+                                    <input type="hidden" name="all_students" value="{{ student.id }}">
+                                    
+                                    <!-- The checkbox sends ONLY the IDs of PRESENT students -->
+                                    <div class="form-check d-inline-block">
+                                        <input class="form-check-input" type="checkbox" name="present_students" value="{{ student.id }}" id="student_{{ student.id }}" checked>
+                                        <label class="form-check-label" for="student_{{ student.id }}">
+                                            Present
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success">Submit Final Attendance</button>
+                    </div>
+                    {% else %}
+                    <p class="text-center text-muted mt-3">No students are registered in the system.</p>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

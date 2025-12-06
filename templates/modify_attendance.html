@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}Modify Attendance{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card mb-4">
+            <div class="card-header"><h3>View / Modify Past Attendance</h3></div>
+            <div class="card-body">
+                <form method="get">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-5"><label for="course_id" class="form-label"><strong>1. Select Course</strong></label><select name="course_id" class="form-select" required><option value="">-- Please select --</option>{% for course in courses %}<option value="{{ course.id }}" {% if course.id == selected_course_id %}selected{% endif %}>{{ course.name }}</option>{% endfor %}</select></div>
+                        <div class="col-md-5"><label for="date" class="form-label"><strong>2. Select Date</strong></label><input type="date" name="date" class="form-control" value="{{ selected_date or '' }}" required></div>
+                        <div class="col-md-2"><button type="submit" class="btn btn-info w-100">View</button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if attendance_records is not none %}
+        <div class="card">
+            <div class="card-header">Modify Attendance for {{ selected_date }}</div>
+            <div class="card-body">
+                {% if attendance_records %}
+                <form method="post">
+                    <input type="hidden" name="course_id" value="{{ selected_course_id }}">
+                    <input type="hidden" name="date" value="{{ selected_date }}">
+                    <table class="table table-hover">
+                        <thead><tr><th>Student Name</th><th style="width: 150px;">Status</th></tr></thead>
+                        <tbody>
+                            {% for record in attendance_records %}
+                            <tr>
+                                <td>{{ record.full_name }}</td>
+                                <td>
+                                    <input type="hidden" name="student_id" value="{{ record.student_user_id }}">
+                                    <select name="status" class="form-select form-select-sm"><option value="Present" {% if record.status == 'Present' %}selected{% endif %}>Present</option><option value="Absent" {% if record.status == 'Absent' %}selected{% endif %}>Absent</option></select>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="text-center mt-4"><button type="submit" class="btn btn-success">Update Attendance</button></div>
+                </form>
+                {% else %}
+                <div class="alert alert-warning text-center">No attendance was recorded for this course on this date.</div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

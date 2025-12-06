@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}Student Login{% endblock %}
+{% block content %}
+<div class="form-container">
+    <div class="col-md-5">
+        <div class="login-branding">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="College Logo" class="login-logo">
+            <h1 class="login-college-name">Bangalore Institute of Technology</h1>
+            <p class="login-department-name">Master of Computer Applications</p>
+        </div>
+        <div class="card">
+            <div class="card-header"><h3>Student Login</h3></div>
+            <div class="card-body">
+                <form method="post" action="{{ url_for('student_login') }}">
+                    <div class="mb-3"><label for="username" class="form-label">Username / Email</label><input type="text" class="form-control" id="username" name="username" required></div>
+                    <div class="mb-3"><label for="password" class="form-label">Password</label><input type="password" class="form-control" id="password" name="password" required></div>
+                    <div class="text-center"><button type="submit" class="btn btn-primary w-100">Login</button></div>
+                </form>
+            </div>
+            <div class="card-footer text-center text-muted">Don't have an account? <a href="{{ url_for('register') }}">Register here</a></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

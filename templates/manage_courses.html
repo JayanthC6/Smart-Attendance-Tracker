@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}Manage Courses{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Add New Course</div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3"><label for="name" class="form-label">Course Name</label><input type="text" class="form-control" name="name" required></div>
+                    <div class="mb-3"><label for="faculty_id" class="form-label">Assign Faculty</label>
+                        <select name="faculty_id" class="form-select" required>
+                            <option value="" disabled selected>-- Select a Faculty --</option>
+                            {% for faculty in faculties %}<option value="{{ faculty.id }}">{{ faculty.full_name }}</option>{% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Add Course</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">Existing Courses</div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead><tr><th>ID</th><th>Course Name</th><th>Assigned Faculty</th></tr></thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr><td>{{ course.id }}</td><td>{{ course.name }}</td><td>{{ course.faculty_name or 'Not Assigned' }}</td></tr>
+                        {% else %}
+                        <tr><td colspan="3" class="text-center text-muted p-4">No courses found.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

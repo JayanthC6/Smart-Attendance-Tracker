@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}Faculty Dashboard{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header"><h3>Faculty Dashboard</h3></div>
+            <div class="card-body">
+                <p class="lead">Welcome, {{ session.username }}!</p>
+                <p>Please select an action:</p>
+                <div class="list-group">
+                    <a href="{{ url_for('take_attendance') }}" class="list-group-item list-group-item-action">
+                        <strong>Take Today's Attendance</strong>
+                        <small class="d-block text-muted">Mark attendance for a new class session.</small>
+                    </a>
+                    <a href="{{ url_for('modify_attendance') }}" class="list-group-item list-group-item-action">
+                        <strong>View / Modify Past Attendance</strong>
+                        <small class="d-block text-muted">Change attendance records for a past date.</small>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
