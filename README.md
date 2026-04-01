@@ -54,10 +54,14 @@ python app.py
 
 Open `http://127.0.0.1:5000` in your browser.
 
-## Default Admin Login
+## Default Admin Login (Development Only)
+
+When `database.py` is used to initialize the database, it creates a default admin user:
 
 - Username: `admin`
 - Password: `admin123`
+
+⚠️ This is for local development only. Change the default password immediately before any shared or production use.
 
 ## Tests
 
