@@ -16,7 +16,6 @@ A comprehensive, modern attendance management system for educational institution
 - **Bulk attendance operations** for efficiency
 - **Attendance modification** with audit trails
 - **Automated low attendance alerts** via email
-- **QR code attendance system** (coming soon)
 
 ### 📈 **Analytics & Reporting**
 - **Interactive dashboards** with Chart.js
