@@ -68,5 +68,8 @@ When `database.py` is used to initialize the database, it creates a default admi
 Run tests with:
 
 ```bash
+# Install pytest if needed
+pip install pytest
+
 python -m pytest tests/
 ```
